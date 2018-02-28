@@ -29,6 +29,97 @@ In brief, PTE has the following features:
 ![](PTE-mgr.png)
 
 
+# Secret Map steps:
+
+### Prerequisites
+- Ensure PTE [Prerequisites](#prerequisites)
+
+##### If running on a Mac
+In addition to commands under [prerequisites](#prerequisites):
+```
+brew install gawk --with-default-names
+brew install gdate --with-default-names
+```
+
+### Setup
+
+Under [Setup](#setup) follow instructions under:<br>
+[Use PTE with latest `fabric-sdk-node` source](#Use-PTE-with-latest-`fabric-sdk-node`-source)
+
+### Network
+
+Get Fabric docker images: <br>
+    - `cd $GOPATH/src/github.com/hyperledger/fabric-test/fabric/examples/e2e_cli/`<br>
+    - `sh ./download-dockerimages.sh -c x86_64-1.0.0 -f x86_64-1.0.0`
+
+Simulate network using `NetworkLauncher`:<br>
+```
+cd $GOPATH/src/github.com/hyperledger/fabric-test/tools/NL
+./networkLauncher.sh -?
+```
+
+This provides options to simulate a network:
+```
+Usage:
+ ./networkLauncher.sh [opt] [value]
+    -a: network action [up|down], default=up
+    -x: number of ca, default=0
+    -d: ledger database type, default=goleveldb
+    -f: profile string, default=test
+    -h: hash type, default=SHA2
+    -k: number of kafka, default=0
+    -z: number of zookeepers, default=0
+    -n: number of channels, default=1
+    -o: number of orderers, default=1
+    -p: number of peers per organization, default=1
+    -r: number of organizations, default=1
+    -s: security type, default=256
+    -t: ledger orderer service type [solo|kafka], default=solo
+    -w: host ip, default=0.0.0.0
+    -l: core logging level [CRITICAL|ERROR|WARNING|NOTICE|INFO|DEBUG], default=ERROR
+    -c: batch timeout, default=2s
+    -B: batch size, default=10
+    -F: local MSP base directory, default=/Users/raheelzubairy/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/
+    -G: src MSP base directory, default=/opt/hyperledger/fabric/msp/crypto-config
+    -S: TLS enablement [enabled|disabled], default=disabled
+    -C: company name, default=example.com
+
+ example:
+ ./networkLauncher.sh -o 1 -x 2 -r 2 -p 2 -k 1 -z 1 -n 2 -t kafka -f test -w 10.120.223.35
+ ./networkLauncher.sh -o 1 -x 2 -r 2 -p 2 -n 1 -f test -w 10.120.223.35
+ ./networkLauncher.sh -o 1 -x 2 -r 2 -p 2 -k 1 -z 1 -n 2 -t kafka -f test -w 10.120.223.35 -S enabled
+ ./networkLauncher.sh -o 4 -x 2 -r 2 -p 2 -k 4 -z 4 -n 2 -t kafka -f test -w localhost -S enabled
+ ./networkLauncher.sh -o 3 -x 6 -r 6 -p 2 -k 3 -z 3 -n 3 -t kafka -f test -w localhost -S enabled
+```
+
+
+try:
+```
+./networkLauncher.sh -o 1 -x 2 -r 2 -p 2 -w localhost -S enabled -l INFO
+```
+
+### Running PTE
+
+In channel create json files, update `channelTX` field under `channelOpt` field.
+
+- In `runCases-secretmap-chan-create-TLS.txt` update path from:<br> `/home/ibmadmin/gopath/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config/ordererOrganizations/testorgschannel1.tx” `<br>
+to  
+`"/users/raheelzubairy/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config/ordererOrganizations/testorgschannel1.tx” `
+
+#### Run the commands
+
+Run PTE commands:
+
+```
+cd $GOPATH/src/github.com/hyperledger/fabric-test/fabric-sdk-node/test/PTE
+./pte_driver.sh secretMapInputs/runCases-secretmap-chan-create-TLS.txt
+./pte_driver.sh secretMapInputs/runCases-secretmap-chan-join-TLS.txt
+./pte_driver.sh secretMapInputs/runCases-secretmap-chan-install-TLS.txt
+./pte_driver.sh secretMapInputs/runCases-secretmap-chan-instantiate-TLS.txt
+./pte_mgr.sh secretMapInputs/PTEMgr-secretmap-constant-q-TLS.txt
+./pte_mgr.sh secretMapInputs/PTEMgr-secretmap-constant-i-TLS.txt
+```
+
 
 ## Table Of Contents:
 - [Prerequisites](#prerequisites)
@@ -55,7 +146,7 @@ In brief, PTE has the following features:
 - PTE commit level: 359dbfb39f507a737ad52129ac0e4fac9cc03c0b
 
 
-### Future items
+### If running on Mac
 
 - Endorsement policy is not supported yet.
 - Replace fabric-sdk-node with fabric-client and fabric-ca-client.
