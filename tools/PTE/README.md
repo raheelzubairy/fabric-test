@@ -31,20 +31,20 @@ In brief, PTE has the following features:
 
 # Secret Map steps:
 
-### Prerequisites
+### Ensure Prerequisites
 - Ensure PTE [Prerequisites](#prerequisites)
 
-##### If running on a Mac
+###### If running on a Mac
 In addition to commands under [prerequisites](#prerequisites):
 ```
 brew install gawk --with-default-names
 brew install gdate --with-default-names
 ```
 
-### Setup
+### Setup the tool
 
 Under [Setup](#setup) follow instructions under:<br>
-[Use PTE with latest `fabric-sdk-node` source](#Use-PTE-with-latest-`fabric-sdk-node`-source)
+[Use PTE with latest `fabric-sdk-node` source](#use-pte-with-latest-fabric-sdk-node-source)
 
 ### Network
 
@@ -214,7 +214,7 @@ Optionally, you may choose to skip this step of obtaining `fabric` and `fabric-c
 
 
 
-### Use PTE with latest `fabric-sdk-node` source
+### Use PTE with latest fabric-sdk-node source
 1. Download fabric-test sources:
     - `go get -d github.com/hyperledger/fabric-test`
 
