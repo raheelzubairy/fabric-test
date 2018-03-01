@@ -37,14 +37,19 @@ In brief, PTE has the following features:
 ###### If running on a Mac
 In addition to commands under [prerequisites](#prerequisites):
 ```
-brew install gawk --with-default-names
-brew install gdate --with-default-names
+brew install coreutils
+brew install libtool
 ```
 
 ### Setup the tool
 
-Under [Setup](#setup) follow instructions under:<br>
+- Under [Setup](#setup) follow instructions under:<br>
 [Use PTE with latest `fabric-sdk-node` source](#use-pte-with-latest-fabric-sdk-node-source)
+
+- Next, copy the `fabric-test/tools/PTE/secretMapInputs` folder from this repo into `$GOPATH/src/github.com/hyperledger/fabric-test/fabric-sdk-node/test/PTE`
+
+- Next copy the `fabric-test/chaincodes/secretmap` folder from this repo into `$GOPATH/src/github.com/hyperledger/fabric-test/fabric-sdk-node/test/PTE`
+`
 
 ### Network
 
@@ -102,9 +107,10 @@ try:
 
 In channel create json files, update `channelTX` field under `channelOpt` field.
 
+I.e:
 - In `runCases-secretmap-chan-create-TLS.txt` update path from:<br> `/home/ibmadmin/gopath/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config/ordererOrganizations/testorgschannel1.tx” `<br>
 to  
-`"/users/raheelzubairy/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config/ordererOrganizations/testorgschannel1.tx” `
+`"/users/{user}/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config/ordererOrganizations/testorgschannel1.tx” `
 
 #### Run the commands
 
